@@ -18,7 +18,17 @@ import { IntersectionApp, IntersectionCSS } from './intersection'
 import { SnapToHandleApp, SnappableConnectionLine } from './connection-radius'
 import { NodeResizerApp, ResizableNode } from './node-resizer'
 import { ToolbarApp, ToolbarNode } from './node-toolbar'
-import { LayoutApp, LayoutEdge, LayoutElements, LayoutIcon, LayoutNode, useLayout, useRunProcess, useShuffle } from './layout'
+import {
+  LayoutApp,
+  LayoutEdge,
+  LayoutElements,
+  LayoutIcon,
+  LayoutNode,
+  useAnimateNode,
+  useLayout,
+  useRunProcess,
+  useShuffle,
+} from './layout'
 import { SimpleLayoutApp, SimpleLayoutElements, SimpleLayoutIcon, useSimpleLayout } from './layout-simple'
 import { LoopbackApp, LoopbackCSS, LoopbackEdge } from './loopback'
 import { MathApp, MathCSS, MathElements, MathIcon, MathOperatorNode, MathResultNode, MathValueNode } from './math'
@@ -137,6 +147,7 @@ export const exampleImports = {
     'useRunProcess.js': useRunProcess,
     'useShuffle.js': useShuffle,
     'useLayout.js': useLayout,
+    'useAnimateNode.js': useAnimateNode,
     'Icon.vue': LayoutIcon,
     'additionalImports': {
       '@dagrejs/dagre': 'https://cdn.jsdelivr.net/npm/@dagrejs/dagre@1.1.2/+esm',

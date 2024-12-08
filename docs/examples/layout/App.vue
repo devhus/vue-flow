@@ -1,6 +1,6 @@
 <script setup>
 import { nextTick, ref } from 'vue'
-import { Panel, VueFlow, useVueFlow } from '@vue-flow/core'
+import { Panel, VueFlow } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import Icon from './Icon.vue'
 import ProcessNode from './ProcessNode.vue'
@@ -17,13 +17,13 @@ const edges = ref(initialEdges)
 
 const cancelOnError = ref(true)
 
+const animatePositionChange = ref(false)
+
 const shuffle = useShuffle()
 
 const { graph, layout, previousDirection } = useLayout()
 
 const { run, stop, reset, isRunning } = useRunProcess({ graph, cancelOnError })
-
-const { fitView } = useVueFlow()
 
 async function shuffleGraph() {
   await stop()
@@ -42,19 +42,15 @@ async function layoutGraph(direction) {
 
   reset(nodes.value)
 
-  nodes.value = layout(nodes.value, edges.value, direction)
-
-  nextTick(() => {
-    fitView()
-  })
+  await layout(nodes.value, edges.value, direction, animatePositionChange.value)
 }
 </script>
 
 <template>
   <div class="layout-flow">
     <VueFlow
-      :nodes="nodes"
-      :edges="edges"
+      v-model:nodes="nodes"
+      v-model:edges="edges"
       :default-edge-options="{ type: 'animation', animated: true }"
       @nodes-initialized="layoutGraph('LR')"
     >
@@ -104,6 +100,11 @@ async function layoutGraph(direction) {
         <div class="checkbox-panel">
           <label>Cancel on error</label>
           <input v-model="cancelOnError" type="checkbox" />
+        </div>
+
+        <div class="checkbox-panel">
+          <label>Animate position change</label>
+          <input v-model="animatePositionChange" type="checkbox" />
         </div>
       </Panel>
     </VueFlow>
